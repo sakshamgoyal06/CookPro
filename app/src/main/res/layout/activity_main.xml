@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.Home.MainActivity">
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/home_top_toolbar_frame">
+            <include layout="@layout/widget_top_toolbar_home"/>
+        </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_top_toolbar_frame"
+            android:id="@+id/home_central_calendar"
+            android:padding="10dp">
+            <include layout="@layout/snippet_center_home_dashboard_calendar"/>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_central_calendar"
+            android:id="@+id/home_central_mealplanner"
+            android:layout_above="@id/home_bottom_nav_frame"
+            android:padding="10dp">
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                android:background="?android:attr/listDivider" />
+            <include layout="@layout/snippet_center_home_dashboard_menu"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@id/divider"/>
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/home_bottom_nav_frame"
+            android:layout_alignParentBottom="true"
+            >
+            <include layout="@layout/widget_bottom_navigation_view"/>
+        </FrameLayout>
+
+
+    </RelativeLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Home"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_home"
+        android:id="@+id/home_button"
+        android:orderInCategory="0"
+        />
+    <item
+        android:title="Manage Kitchen"
+        app:showAsAction="always"
+        android:id="@+id/home_manage_kitchen"
+        android:icon="@drawable/ic_fridge"
+        android:orderInCategory="2"
+        />
+
+
+
+
+    <item
+        android:title="Manage Chef"
+        app:showAsAction="always"
+        android:id="@+id/home_manage_chef"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_kitchen"
+        />
+
+    <item
+        android:title="Explore"
+        app:showAsAction="always"
+        android:id="@+id/home_explore"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_search"
+        />
+</menu>

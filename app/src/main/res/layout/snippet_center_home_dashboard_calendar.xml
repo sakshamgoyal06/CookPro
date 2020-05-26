@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_calendar_active_day_linear"
+            android:orientation="horizontal"
+            android:weightSum="8">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_back"
+                android:id="@+id/home_calendar_prev_month"
+                android:background="@color/colorPrimaryDark"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Sunday"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:id="@+id/home_calendar_active_weekday"
+                android:fontFamily="@font/caviardreams"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="23 March"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_weight="5"
+                android:layout_alignParentTop="true"
+                android:id="@+id/home_calendar_active_date"
+                android:fontFamily="@font/caviardreams"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="2020"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/home_calendar_active_year"
+                android:fontFamily="@font/caviardreams"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/white"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/home_calendar_next_month"
+                android:src="@drawable/ic_next"
+                android:background="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:layout_below="@id/home_calendar_active_day_linear"
+            android:id="@+id/home_calendar_week_lin"
+            android:weightSum="7"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fri"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/caviardreams"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="@drawable/background_week_list"/>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_calendar_grid_rel_view"
+            android:layout_below="@id/home_calendar_week_lin"
+            >
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="7"
+                android:id="@+id/home_calendar_grid_view"
+                android:clickable="true"
+
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_calendar_grid_rel_view"
+            android:orientation="horizontal"
+            android:weightSum="9"
+            >
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/background_round_button"
+                android:src="@drawable/ic_reset"
+                android:id="@+id/home_calendar_reset_calendar"
+                android:padding="5dp"
+                android:layout_gravity="left"
+                />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:padding="5dp"
+                android:textSize="15sp"
+                android:src="@drawable/ic_check"
+                android:id="@+id/home_calendar_mark_attendance"
+                android:background="@drawable/background_round_button"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
+
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/background_round_button"
+                android:src="@drawable/ic_expand_more"
+                android:id="@+id/home_expand_calendar"
+                android:padding="5dp"
+                android:layout_gravity="right"
+                />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</merge>
