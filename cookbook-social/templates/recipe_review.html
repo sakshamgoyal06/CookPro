@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Review recipe — Cookbook Social{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Review your recipe</h1>
+  <p class="muted">Check the transcript, AI draft, and unclear items. When you are happy, publish — or keep working as a draft.</p>
+
+  <section class="review-section">
+    <h2>Raw transcript</h2>
+    <pre class="transcript">{{ recipe.raw_transcript }}</pre>
+  </section>
+
+  <section class="review-section">
+    <h2>AI title</h2>
+    <p>{{ recipe.title }}</p>
+  </section>
+
+  <section class="review-section">
+    <h2>Caption</h2>
+    <p>{{ recipe.caption }}</p>
+    <h3>Story note</h3>
+    <p>{{ recipe.story_note }}</p>
+  </section>
+
+  <section class="review-grid">
+    <div><strong>Category</strong><br>{{ recipe.category }}</div>
+    <div><strong>Cuisine</strong><br>{{ recipe.cuisine }}</div>
+    <div><strong>Serves</strong><br>{{ recipe.serves }}</div>
+    <div><strong>Prep (min)</strong><br>{{ recipe.prep_time_minutes }}</div>
+    <div><strong>Cook (min)</strong><br>{{ recipe.cook_time_minutes }}</div>
+    <div><strong>Difficulty</strong><br>{{ recipe.difficulty }}</div>
+  </section>
+
+  <section class="review-section">
+    <h2>Ingredients</h2>
+    <ul class="ingredient-list">
+      {% for ing in recipe.ingredients %}
+        <li><strong>{{ ing.item }}</strong> — {{ ing.quantity }} {{ ing.unit }} {% if ing.preparation_note %}({{ ing.preparation_note }}){% endif %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="review-section">
+    <h2>Method</h2>
+    <ol class="method-list">
+      {% for step in recipe.method_steps|sort(attribute='step_number') %}
+        <li>
+          <div>{{ step.instruction }}</div>
+          <div class="muted small">Flame: {{ step.flame_level }} · Timing: {{ step.timing }} · Cue: {{ step.sensory_cue }}</div>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="review-section">
+    <h2>Tips</h2>
+    <ul>
+      {% for tip in recipe.tips %}
+        <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+    <h3>Serving suggestion</h3>
+    <p>{{ recipe.serving_suggestion }}</p>
+    <h3>Storage notes</h3>
+    <p>{{ recipe.storage_notes }}</p>
+  </section>
+
+  <section class="review-section">
+    <h2>Tags</h2>
+    <div class="tag-row">
+      {% for t in recipe.tags %}
+        <span class="tag">{{ t }}</span>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="review-section unclear">
+    <h2>Unclear items for review</h2>
+    {% if recipe.unclear_items %}
+      <ul>
+        {% for u in recipe.unclear_items %}
+          <li>{{ u }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted">None flagged.</p>
+    {% endif %}
+  </section>
+
+  <div class="action-row">
+    <a class="btn btn-ghost" href="{{ url_for('recipe_edit', recipe_id=recipe.id) }}">Edit recipe</a>
+    <form method="post" action="{{ url_for('recipe_publish', recipe_id=recipe.id) }}">
+      <button class="btn btn-primary" type="submit">Publish recipe</button>
+    </form>
+    <form method="post" action="{{ url_for('recipe_mark_draft', recipe_id=recipe.id) }}">
+      <button class="btn btn-ghost" type="submit">Keep as draft</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sign up — Cookbook Social{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>Create your kitchen</h1>
+  <form method="post" class="stacked-form">
+    <label>Username
+      <input type="text" name="username" required pattern="[A-Za-z0-9_]{3,32}" title="Lowercase letters, numbers, underscore. 3–32 characters.">
+    </label>
+    <label>Email
+      <input type="email" name="email" required>
+    </label>
+    <label>Display name
+      <input type="text" name="display_name" required>
+    </label>
+    <label>Password
+      <input type="password" name="password" required minlength="6">
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="is_creator"> I plan to publish recipes as a creator
+    </label>
+    <button class="btn btn-primary" type="submit">Sign up</button>
+  </form>
+  <p class="muted">Already have an account? <a href="{{ url_for('login') }}">Login</a>.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Cookbook themes — Cookbook Social{% endblock %}
+{% block content %}
+<h1 class="page-title">Cookbook themes</h1>
+<p class="muted">These themes are a foundation for a future PDF and print cookbook builder. For now, browse the palette of your future book.</p>
+<div class="feed-grid">
+  {% for t in themes %}
+    <article class="recipe-card">
+      <h2 class="card-title">{{ t.name }}</h2>
+      <p class="card-caption">{{ t.description }}</p>
+      <p class="small muted">Page size: {{ t.page_size }}</p>
+    </article>
+  {% endfor %}
+</div>
+{% endblock %}

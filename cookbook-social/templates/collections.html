@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Collections — Cookbook Social{% endblock %}
+{% block content %}
+<h1 class="page-title">Collections</h1>
+<p class="muted">Group your own recipes into lists for later cookbook projects.</p>
+
+{% if create_mode %}
+  <div class="card narrow">
+    <h2>Create a collection</h2>
+    <form method="post" class="stacked-form">
+      <label>Title
+        <input type="text" name="title" required>
+      </label>
+      <label>Description
+        <textarea name="description" rows="3"></textarea>
+      </label>
+      <label>Visibility
+        <select name="visibility">
+          <option value="public">Public</option>
+          <option value="premium">Premium (reserved)</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+  </div>
+{% else %}
+  <div class="toolbar">
+    <a class="btn btn-primary" href="{{ url_for('collections_create') }}">New collection</a>
+  </div>
+  <div class="feed-grid">
+    {% for c in collections %}
+      <article class="recipe-card">
+        <h2 class="card-title">{{ c.title }}</h2>
+        <p class="card-caption">{{ c.description }}</p>
+        <span class="badge badge-{{ c.visibility }}">{{ c.visibility|capitalize }}</span>
+        <p><a class="btn btn-ghost btn-sm" href="{{ url_for('collection_detail', collection_id=c.id) }}">Open</a></p>
+      </article>
+    {% else %}
+      <p class="muted">No collections yet. Start one to curate your recipes.</p>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

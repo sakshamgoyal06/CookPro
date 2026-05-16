@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Saved recipes — Cookbook Social{% endblock %}
+{% block content %}
+<h1 class="page-title">Saved recipes</h1>
+<div class="feed-grid">
+  {% for item in recipes %}
+    <article class="recipe-card">
+      <header class="card-header">
+        {% set creator = item.creator %}
+        {% if creator %}
+          <div class="creator-row">
+            {% if profile_photo_url(creator) %}
+              <img class="avatar sm" src="{{ profile_photo_url(creator) }}" alt="">
+            {% else %}
+              <div class="avatar sm placeholder"></div>
+            {% endif %}
+            <div>
+              <div class="creator-name">{{ creator.display_name }}</div>
+              <div class="creator-handle">@{{ creator.username }}</div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="badges">
+          {% if item.visibility == 'premium' %}
+            <span class="badge badge-premium">Premium</span>
+          {% else %}
+            <span class="badge badge-public">Public</span>
+          {% endif %}
+          {% if item.access_level == 'locked' %}
+            <span class="badge badge-locked">Locked</span>
+          {% endif %}
+        </div>
+      </header>
+      {% set img = (item.media | selectattr('media_type', 'equalto', 'image') | list | first) %}
+      {% if img %}
+        <img class="card-media" src="{{ media_url('image', img.filename) }}" alt="">
+      {% endif %}
+      <h2 class="card-title">{{ item.title }}</h2>
+      <p class="card-caption">{{ item.caption }}</p>
+      <a class="btn btn-primary btn-sm" href="{{ url_for('recipe_detail', recipe_id=item.id) }}">View recipe</a>
+    </article>
+  {% else %}
+    <p class="muted">You have not saved any recipes yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

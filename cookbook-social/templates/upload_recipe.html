@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Upload recipe — Cookbook Social{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Upload a recipe from a voice note</h1>
+  <p class="muted">Audio is required. Photos and videos are optional. We transcribe your voice note and draft a structured recipe for you to review.</p>
+  <form method="post" enctype="multipart/form-data" class="stacked-form">
+    <label>Voice note (required)
+      <input type="file" name="audio" accept=".mp3,.m4a,.wav,.ogg,.webm" required>
+    </label>
+    <label>Photo (optional)
+      <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp">
+    </label>
+    <label>Video (optional)
+      <input type="file" name="video" accept=".mp4,.mov,.webm">
+    </label>
+    <label>Caption / story (optional)
+      <textarea name="caption" rows="3" placeholder="A short note from the kitchen…"></textarea>
+    </label>
+    <label>Visibility
+      <select name="visibility">
+        <option value="public">Public</option>
+        <option value="premium">Premium (subscribers only)</option>
+      </select>
+    </label>
+    <label>Category (optional)
+      <input type="text" name="category" placeholder="e.g. Dal, Bread, Festival">
+    </label>
+    <label>Cuisine (optional)
+      <input type="text" name="cuisine" placeholder="e.g. Gujarati, Hyderabadi">
+    </label>
+    <button class="btn btn-primary" type="submit">Process voice note</button>
+  </form>
+</div>
+{% endblock %}

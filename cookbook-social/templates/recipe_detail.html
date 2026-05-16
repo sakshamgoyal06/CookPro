@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}{{ recipe.title }} — Cookbook Social{% endblock %}
+{% block content %}
+{% set img = (recipe.media | selectattr('media_type', 'equalto', 'image') | list | first) %}
+{% set vid = (recipe.media | selectattr('media_type', 'equalto', 'video') | list | first) %}
+{% set aud = (recipe.media | selectattr('media_type', 'equalto', 'audio') | list | first) %}
+
+<article class="card recipe-detail">
+  <header class="detail-header">
+    <div>
+      <h1>{{ recipe.title }}</h1>
+      <p class="muted">By {{ creator.display_name }} (@{{ creator.username }})</p>
+      <div class="badges">
+        <span class="badge badge-{{ recipe.visibility }}">{{ recipe.visibility|capitalize }}</span>
+        {% if access_level == 'locked' %}
+          <span class="badge badge-locked">Premium locked</span>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if vid %}
+    <video class="detail-media" controls src="{{ media_url('video', vid.filename) }}"></video>
+  {% elif img %}
+    <img class="detail-media" src="{{ media_url('image', img.filename) }}" alt="">
+  {% endif %}
+
+  {% if access_level == 'full' and aud %}
+    <audio class="detail-audio" controls src="{{ media_url('audio', aud.filename) }}"></audio>
+  {% endif %}
+
+  {% if access_level == 'locked' %}
+    <section class="locked-panel">
+      <p class="teaser">{{ recipe.caption[:220] }}{% if recipe.caption|length > 220 %}…{% endif %}</p>
+      <p class="muted">Subscribe to this creator (simulated) to unlock ingredients, method, and full notes.</p>
+      <form method="post" action="{{ url_for('subscribe_creator', username=creator.username) }}">
+        <button class="btn btn-primary" type="submit">Subscribe to unlock</button>
+      </form>
+      <a class="btn btn-ghost" href="{{ url_for('profile', username=creator.username) }}">View creator profile</a>
+    </section>
+  {% else %}
+    <section>
+      <h2>Caption & story</h2>
+      <p>{{ recipe.caption }}</p>
+      <p class="story">{{ recipe.story_note }}</p>
+    </section>
+
+    <section class="review-grid">
+      <div><strong>Category</strong><br>{{ recipe.category }}</div>
+      <div><strong>Cuisine</strong><br>{{ recipe.cuisine }}</div>
+      <div><strong>Serves</strong><br>{{ recipe.serves }}</div>
+      <div><strong>Prep (min)</strong><br>{{ recipe.prep_time_minutes }}</div>
+      <div><strong>Cook (min)</strong><br>{{ recipe.cook_time_minutes }}</div>
+      <div><strong>Difficulty</strong><br>{{ recipe.difficulty }}</div>
+    </section>
+
+    <section>
+      <h2>Ingredients</h2>
+      <ul class="ingredient-list">
+        {% for ing in recipe.ingredients %}
+          <li><strong>{{ ing.item }}</strong> — {{ ing.quantity }} {{ ing.unit }} {% if ing.preparation_note %}({{ ing.preparation_note }}){% endif %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Method</h2>
+      <ol class="method-list">
+        {% for step in recipe.method_steps|sort(attribute='step_number') %}
+          <li>
+            <div>{{ step.instruction }}</div>
+            <div class="muted small">Flame: {{ step.flame_level }} · Timing: {{ step.timing }} · Cue: {{ step.sensory_cue }}</div>
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section>
+      <h2>Tips</h2>
+      <ul>
+        {% for tip in recipe.tips %}
+          <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+      <h3>Serving</h3>
+      <p>{{ recipe.serving_suggestion }}</p>
+      <h3>Storage</h3>
+      <p>{{ recipe.storage_notes }}</p>
+    </section>
+
+    <section>
+      <h2>Tags</h2>
+      <div class="tag-row">
+        {% for t in recipe.tags %}
+          <span class="tag">{{ t }}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if recipe.unclear_items %}
+      <section class="unclear">
+        <h2>Unclear items</h2>
+        <ul>
+          {% for u in recipe.unclear_items %}
+            <li>{{ u }}</li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  {% endif %}
+
+  <div class="card-actions">
+    <form method="post" action="{{ url_for('recipe_like', recipe_id=recipe.id) }}">
+      <button class="btn btn-ghost btn-sm" type="submit">{% if recipe.liked_by_me %}♥ Liked{% else %}Like{% endif %} ({{ recipe.like_count }})</button>
+    </form>
+    <form method="post" action="{{ url_for('recipe_save', recipe_id=recipe.id) }}">
+      <button class="btn btn-ghost btn-sm" type="submit">{% if recipe.saved_by_me %}Saved{% else %}Save{% endif %}</button>
+    </form>
+    <a class="btn btn-ghost btn-sm" href="{{ url_for('collections_list') }}">Collections…</a>
+  </div>
+</article>
+{% endblock %}

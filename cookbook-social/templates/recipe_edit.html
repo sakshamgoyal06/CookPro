@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Edit recipe — Cookbook Social{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Edit recipe</h1>
+  <form method="post" class="stacked-form">
+    <label>Title
+      <input type="text" name="title" value="{{ recipe.title }}" required>
+    </label>
+    <label>Caption
+      <textarea name="caption" rows="2">{{ recipe.caption }}</textarea>
+    </label>
+    <label>Story note
+      <textarea name="story_note" rows="3">{{ recipe.story_note }}</textarea>
+    </label>
+    <label>Category
+      <input type="text" name="category" value="{{ recipe.category }}">
+    </label>
+    <label>Cuisine
+      <input type="text" name="cuisine" value="{{ recipe.cuisine }}">
+    </label>
+    <label>Visibility
+      <select name="visibility">
+        <option value="public" {% if recipe.visibility == 'public' %}selected{% endif %}>Public</option>
+        <option value="premium" {% if recipe.visibility == 'premium' %}selected{% endif %}>Premium</option>
+      </select>
+    </label>
+    <label>Serves
+      <input type="text" name="serves" value="{{ recipe.serves }}">
+    </label>
+    <label>Prep time (minutes)
+      <input type="number" name="prep_time_minutes" value="{{ recipe.prep_time_minutes or '' }}">
+    </label>
+    <label>Cook time (minutes)
+      <input type="number" name="cook_time_minutes" value="{{ recipe.cook_time_minutes or '' }}">
+    </label>
+    <label>Difficulty
+      <input type="text" name="difficulty" value="{{ recipe.difficulty }}">
+    </label>
+    <label>Ingredients JSON
+      <textarea name="ingredients_json" rows="8" class="code">{{ recipe.ingredients | tojson(indent=2) }}</textarea>
+    </label>
+    <label>Method steps JSON
+      <textarea name="method_steps_json" rows="10" class="code">{{ recipe.method_steps | tojson(indent=2) }}</textarea>
+    </label>
+    <label>Tips JSON (array of strings)
+      <textarea name="tips_json" rows="4" class="code">{{ recipe.tips | tojson(indent=2) }}</textarea>
+    </label>
+    <label>Tags JSON
+      <textarea name="tags_json" rows="3" class="code">{{ recipe.tags | tojson(indent=2) }}</textarea>
+    </label>
+    <label>Serving suggestion
+      <textarea name="serving_suggestion" rows="2">{{ recipe.serving_suggestion }}</textarea>
+    </label>
+    <label>Storage notes
+      <textarea name="storage_notes" rows="2">{{ recipe.storage_notes }}</textarea>
+    </label>
+    <label>Unclear items JSON
+      <textarea name="unclear_items_json" rows="3" class="code">{{ recipe.unclear_items | tojson(indent=2) }}</textarea>
+    </label>
+    <button class="btn btn-primary" type="submit">Save changes</button>
+    <a class="btn btn-ghost" href="{{ url_for('recipe_review', recipe_id=recipe.id) }}">Back to review</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Feed — Cookbook Social{% endblock %}
+{% block content %}
+<h1 class="page-title">Your feed</h1>
+<p class="muted">Recipes from people you follow, plus your own. If you are not following anyone yet, you will see public recipes from the whole community.</p>
+<div class="feed-grid">
+  {% for item in items %}
+    <article class="recipe-card">
+      <header class="card-header">
+        {% set creator = item.creator %}
+        <div class="creator-row">
+          {% if creator %}
+            {% if profile_photo_url(creator) %}
+              <img class="avatar sm" src="{{ profile_photo_url(creator) }}" alt="">
+            {% else %}
+              <div class="avatar sm placeholder"></div>
+            {% endif %}
+            <div>
+              <div class="creator-name">{{ creator.display_name }}</div>
+              <div class="creator-handle">@{{ creator.username }}</div>
+            </div>
+          {% else %}
+            <div class="creator-name">Cook</div>
+            <div class="creator-handle">Unknown profile</div>
+          {% endif %}
+        </div>
+        <div class="badges">
+          {% if item.visibility == 'premium' %}
+            <span class="badge badge-premium">Premium</span>
+          {% else %}
+            <span class="badge badge-public">Public</span>
+          {% endif %}
+          {% if item.access_level == 'locked' %}
+            <span class="badge badge-locked">Locked</span>
+          {% endif %}
+        </div>
+      </header>
+      {% set img = (item.media | selectattr('media_type', 'equalto', 'image') | list | first) %}
+      {% set vid = (item.media | selectattr('media_type', 'equalto', 'video') | list | first) %}
+      {% if vid %}
+        <video class="card-media" controls src="{{ media_url('video', vid.filename) }}"></video>
+      {% elif img %}
+        <img class="card-media" src="{{ media_url('image', img.filename) }}" alt="">
+      {% endif %}
+      <h2 class="card-title">{{ item.title }}</h2>
+      <p class="card-caption">{{ item.caption }}</p>
+      <div class="card-actions">
+        <form method="post" action="{{ url_for('recipe_like', recipe_id=item.id) }}">
+          <button class="btn btn-ghost btn-sm" type="submit">{% if item.liked_by_me %}♥ Liked{% else %}Like{% endif %} ({{ item.like_count }})</button>
+        </form>
+        <form method="post" action="{{ url_for('recipe_save', recipe_id=item.id) }}">
+          <button class="btn btn-ghost btn-sm" type="submit">{% if item.saved_by_me %}Saved{% else %}Save{% endif %}</button>
+        </form>
+        <a class="btn btn-ghost btn-sm" href="{{ url_for('collections_list') }}">Collections…</a>
+        <a class="btn btn-primary btn-sm" href="{{ url_for('recipe_detail', recipe_id=item.id) }}">View recipe</a>
+      </div>
+    </article>
+  {% else %}
+    <p class="muted">No recipes to show yet. Follow a cook or upload your first voice note.</p>
+  {% endfor %}
+</div>
+{% endblock %}
