@@ -20,4 +20,3 @@ __pycache__/
 venv/
 cookbook-social/instance/*.db
 cookbook-social/uploads/
-cookbook-social/outputs/
