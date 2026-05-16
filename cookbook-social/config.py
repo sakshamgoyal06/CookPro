@@ -4,9 +4,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent
+# Load project .env even when the app is started from a different working directory.
+load_dotenv(BASE_DIR / ".env")
+
 INSTANCE_DIR = BASE_DIR / "instance"
 UPLOADS_DIR = BASE_DIR / "uploads"
 AUDIO_DIR = UPLOADS_DIR / "audio"
