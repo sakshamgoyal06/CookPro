@@ -21,7 +21,9 @@ DATABASE_PATH = os.environ.get("DATABASE_PATH", str(INSTANCE_DIR / "cookbook_soc
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_TRANSCRIBE_MODEL = os.environ.get("OPENAI_TRANSCRIBE_MODEL", "gpt-4o-transcribe")
-OPENAI_RECIPE_MODEL = os.environ.get("OPENAI_RECIPE_MODEL", "gpt-4.1")
+
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_RECIPE_MODEL = os.environ.get("ANTHROPIC_RECIPE_MODEL", "claude-sonnet-4-20250514")
 
 MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100 MB uploads
 

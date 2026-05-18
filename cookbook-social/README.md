@@ -1,6 +1,6 @@
 # Cookbook Social
 
-Cookbook Social is a small, production-minded MVP for a cooking-focused social network. Creators record a mandatory voice note when uploading a recipe. The audio is transcribed with OpenAI speech-to-text, then structured into a polished recipe JSON with a dedicated prompt. Other cooks can follow each other, browse a feed, save dishes, curate collections, and simulate premium subscriptions to unlock subscriber-only recipes.
+Cookbook Social is a small, production-minded MVP for a cooking-focused social network. Creators record a mandatory voice note when uploading a recipe. The audio is transcribed with OpenAI speech-to-text, then structured into a polished recipe JSON with Anthropic Claude using the same dedicated prompt. Other cooks can follow each other, browse a feed, save dishes, curate collections, and simulate premium subscriptions to unlock subscriber-only recipes.
 
 ## Features
 
@@ -19,7 +19,8 @@ Cookbook Social is a small, production-minded MVP for a cooking-focused social n
 - Python 3 and Flask with server-rendered HTML templates.
 - SQLite via lightweight SQL helpers (easy to swap for PostgreSQL later by changing connection code and SQL dialect where needed).
 - Flask-Login for sessions.
-- OpenAI APIs for transcription and JSON recipe structuring.
+- OpenAI for speech-to-text transcription.
+- Anthropic Claude for JSON recipe structuring from the transcript.
 - Local disk storage under `uploads/` and `outputs/` for MVP media.
 
 ## Setup
@@ -35,12 +36,13 @@ cp .env.example .env
 Edit `.env` and set at least:
 
 - `SECRET_KEY` — random string for signing session cookies.
-- `OPENAI_API_KEY` — required for transcription and structuring during upload.
+- `OPENAI_API_KEY` — required for transcription during upload.
+- `ANTHROPIC_API_KEY` — required for recipe structuring during upload.
 
 Optional:
 
 - `OPENAI_TRANSCRIBE_MODEL` (defaults to `gpt-4o-transcribe`).
-- `OPENAI_RECIPE_MODEL` (defaults to `gpt-4.1`).
+- `ANTHROPIC_RECIPE_MODEL` (defaults to `claude-sonnet-4-20250514`; set to any Claude model ID your key supports).
 - `DATABASE_PATH` — override SQLite file location.
 
 ## Run the app

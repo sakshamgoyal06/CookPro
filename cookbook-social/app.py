@@ -34,6 +34,7 @@ from services import (  # noqa: E402
     media_service,
     recipe_service,
 )
+from services.anthropic_service import AnthropicServiceError  # noqa: E402
 from services.openai_service import OpenAIServiceError  # noqa: E402
 
 config.ensure_directories()
@@ -377,14 +378,14 @@ def upload_recipe():
             return render_template("upload_recipe.html"), 400
         audio_path = str(config.AUDIO_DIR / audio_name)
         try:
-            from services import openai_service
+            from services import anthropic_service, openai_service
 
             transcript = openai_service.transcribe_audio(audio_path)
             if not transcript.strip():
                 flash("We could not detect speech in that recording. Try a clearer voice note.", "error")
                 return render_template("upload_recipe.html"), 400
-            structured = openai_service.structure_recipe(transcript)
-        except OpenAIServiceError as exc:
+            structured = anthropic_service.structure_recipe(transcript)
+        except (OpenAIServiceError, AnthropicServiceError) as exc:
             flash(str(exc), "error")
             return render_template("upload_recipe.html"), 502
         rid = recipe_service.create_recipe_from_upload(
