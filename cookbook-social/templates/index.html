@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Cookbook Social — Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Turn voice notes into beautiful recipes.</h1>
+  <p class="lede">Cookbook Social is a calm, social kitchen journal: follow cooks, save dishes you love, and let AI help polish what you already know by heart.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="{{ url_for('signup') }}">Sign up</a>
+    <a class="btn btn-ghost" href="{{ url_for('login') }}">Login</a>
+  </div>
+</section>
+{% endblock %}

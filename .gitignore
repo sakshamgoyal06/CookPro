@@ -12,3 +12,11 @@
 /captures
 .externalNativeBuild
 .cxx
+__pycache__/
+*.py[cod]
+*.sqlite3
+.env
+.venv/
+venv/
+cookbook-social/instance/*.db
+cookbook-social/uploads/

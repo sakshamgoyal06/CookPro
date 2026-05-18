@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Edit profile — Cookbook Social{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>Edit profile</h1>
+  <form method="post" enctype="multipart/form-data" class="stacked-form">
+    <label>Display name
+      <input type="text" name="display_name" value="{{ user.display_name }}" required>
+    </label>
+    <label>Bio
+      <textarea name="bio" rows="4">{{ user.bio }}</textarea>
+    </label>
+    <label>Profile photo
+      <input type="file" name="profile_photo" accept=".jpg,.jpeg,.png,.webp">
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="is_creator" {% if user.is_creator %}checked{% endif %}> I am a creator
+    </label>
+    <button class="btn btn-primary" type="submit">Save changes</button>
+  </form>
+</div>
+{% endblock %}

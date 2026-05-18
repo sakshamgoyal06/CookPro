@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ collection.title }} — Collection{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ collection.title }}</h1>
+  <p class="muted">{{ collection.description }}</p>
+  <span class="badge badge-{{ collection.visibility }}">{{ collection.visibility|capitalize }}</span>
+</div>
+
+{% if own_recipes %}
+  <div class="card narrow">
+    <h2>Add one of your recipes</h2>
+    <form method="post" class="stacked-form">
+      <label>Recipe
+        <select name="recipe_id" required>
+          {% for r in own_recipes %}
+            <option value="{{ r.id }}">{{ r.title }} ({{ r.status }})</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Add to collection</button>
+    </form>
+  </div>
+{% else %}
+  <p class="muted">Create a recipe first to add it to this collection.</p>
+{% endif %}
+
+<h2 class="section-title">Recipes in this collection</h2>
+<div class="feed-grid">
+  {% for r in recipes %}
+    <article class="recipe-card">
+      <h3 class="card-title">{{ r.title }}</h3>
+      <p class="card-caption">{{ r.caption }}</p>
+      <a class="btn btn-primary btn-sm" href="{{ url_for('recipe_detail', recipe_id=r.id) }}">View</a>
+    </article>
+  {% else %}
+    <p class="muted">This collection is empty.</p>
+  {% endfor %}
+</div>
+{% endblock %}

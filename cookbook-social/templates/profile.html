@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ target.display_name }} — Profile{% endblock %}
+{% block content %}
+<div class="profile-header card">
+  <div class="profile-identity">
+    {% if profile_photo_url(target) %}
+      <img class="avatar lg" src="{{ profile_photo_url(target) }}" alt="">
+    {% else %}
+      <div class="avatar lg placeholder"></div>
+    {% endif %}
+    <div>
+      <h1>{{ target.display_name }}</h1>
+      <p class="handle">@{{ target.username }}</p>
+      {% if target.is_creator %}
+        <span class="badge badge-premium">Creator</span>
+      {% endif %}
+    </div>
+  </div>
+  <p class="bio">{{ target.bio or 'This cook has not added a bio yet.' }}</p>
+  {% if viewer and not is_self %}
+    <div class="profile-actions">
+      {% if following %}
+        <form method="post" action="{{ url_for('unfollow_user', username=target.username) }}">
+          <button class="btn btn-ghost" type="submit">Unfollow</button>
+        </form>
+      {% else %}
+        <form method="post" action="{{ url_for('follow_user', username=target.username) }}">
+          <button class="btn btn-primary" type="submit">Follow</button>
+        </form>
+      {% endif %}
+      {% if target.is_creator %}
+        {% if subscribed %}
+          <form method="post" action="{{ url_for('unsubscribe_creator', username=target.username) }}">
+            <button class="btn btn-ghost" type="submit">Unsubscribe (simulated)</button>
+          </form>
+        {% else %}
+          <form method="post" action="{{ url_for('subscribe_creator', username=target.username) }}">
+            <button class="btn btn-primary" type="submit">Subscribe to premium (simulated)</button>
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% elif is_self %}
+    <a class="btn btn-ghost" href="{{ url_for('edit_profile') }}">Edit profile</a>
+  {% endif %}
+</div>
+
+<h2 class="section-title">Recipes</h2>
+<div class="feed-grid">
+  {% for r in recipes %}
+    <article class="recipe-card">
+      <div class="badges">
+        <span class="badge badge-{{ r.visibility }}">{{ r.visibility|capitalize }}</span>
+        <span class="badge badge-status">{{ r.status }}</span>
+      </div>
+      <h3 class="card-title">{{ r.title }}</h3>
+      <p class="card-caption">{{ r.caption }}</p>
+      <a class="btn btn-primary btn-sm" href="{{ url_for('recipe_detail', recipe_id=r.id) }}">Open</a>
+      {% if is_self and r.status in ['draft','needs_review'] %}
+        <a class="btn btn-ghost btn-sm" href="{{ url_for('recipe_review', recipe_id=r.id) }}">Review</a>
+      {% endif %}
+    </article>
+  {% else %}
+    <p class="muted">No recipes to show yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}
